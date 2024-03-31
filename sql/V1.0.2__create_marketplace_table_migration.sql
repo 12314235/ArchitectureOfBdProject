@@ -1,0 +1,9 @@
+BEGIN;
+	CREATE TABLE IF NOT EXISTS marketplace(
+		marketplace_id SERIAL PRIMARY KEY,
+		name VARCHAR(100) NOT NULL,
+		api_key VARCHAR(255) NOT NULL,
+		secret_api VARCHAR(255) NOT NULL,
+		url VARCHAR(255)
+	);
+COMMIT;
