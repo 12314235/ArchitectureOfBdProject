@@ -17,4 +17,4 @@ END;
 $$ LANGUAGE plpgsql;
 
 
-SELECT insert_fake_users(1000000);
+SELECT insert_fake_users(${CORTAGES_COUNT_MAIN_ENTITIES});

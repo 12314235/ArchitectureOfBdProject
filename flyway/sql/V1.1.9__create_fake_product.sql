@@ -18,4 +18,4 @@ END;
 $$ LANGUAGE plpgsql;
 
 
-SELECT insert_fake_products(1000000);
+SELECT insert_fake_products(${CORTAGES_COUNT_MAIN_ENTITIES});

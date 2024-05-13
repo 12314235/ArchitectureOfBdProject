@@ -19,6 +19,7 @@ RUN pip3 install faker
 
 RUN pgxn install postgresql_faker
 
+
 EXPOSE 5432
 
 

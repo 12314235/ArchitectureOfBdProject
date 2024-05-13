@@ -6,8 +6,8 @@ BEGIN
     WHILE i <= num_rows LOOP
         INSERT INTO user_marketplace (user_id, marketplace_id)
 SELECT
-    (SELECT user_id FROM users WHERE (user_id * 17) % 10 = i % 10 GROUP BY user_id LIMIT 1),
-    (SELECT marketplace_id FROM marketplace WHERE (marketplace_id * 13) % 10 = i % 10 GROUP BY marketplace_id LIMIT 1);
+    (SELECT user_id FROM users ORDER BY random() LIMIT 1),
+    (SELECT marketplace_id FROM marketplace ORDER BY random() LIMIT 1);
 
 	i := i + 1;
 	END LOOP;
@@ -16,4 +16,4 @@ $$ LANGUAGE plpgsql;
 
 
 
-SELECT insert_fake_user_marketplace(1000000);
+SELECT insert_fake_user_marketplace(${CORTAGES_COUNT_MAIN_ENTITIES});

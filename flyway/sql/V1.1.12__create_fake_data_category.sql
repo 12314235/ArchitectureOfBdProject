@@ -16,4 +16,4 @@ $$ LANGUAGE plpgsql;
 
 
 
-SELECT insert_fake_category(1000);
+SELECT insert_fake_category(${CORTAGES_COUNT_SMALL_ENTITIES});

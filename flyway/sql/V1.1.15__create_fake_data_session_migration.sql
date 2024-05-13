@@ -6,7 +6,7 @@ BEGIN
     WHILE i <= num_rows LOOP
         INSERT INTO session (user_id, creation_time, exit_timestamp, ip_address)
 SELECT
-    (SELECT user_id FROM users WHERE (user_id * 17) % 10 = i % 10 GROUP BY user_id LIMIT 1),
+    (SELECT user_id FROM users ORDER BY random() LIMIT 1),
     (SELECT timestamp '2014-01-10 20:00:00' +
        random() * (timestamp '2014-01-20 20:00:00' -
                    timestamp '2014-01-10 10:00:00')),
@@ -22,4 +22,4 @@ $$ LANGUAGE plpgsql;
 
 
 
-SELECT insert_fake_session(1000000);
+SELECT insert_fake_session(${CORTAGES_COUNT_MIDDLE_ENTITIES});

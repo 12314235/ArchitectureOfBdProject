@@ -6,7 +6,7 @@ BEGIN
     WHILE i <= num_rows LOOP
         INSERT INTO product (name, description, price, quantity, image_url)
         VALUES (
-            faker.random_company_product(),
+            faker.name(),
             faker.text(),
             round(random()::INTEGER, 2), 
             random(),
@@ -18,4 +18,4 @@ END;
 $$ LANGUAGE plpgsql;
 
 
-SELECT insert_fake_products(1000000);
+SELECT insert_fake_products(${CORTAGES_COUNT_MAIN_ENTITIES});
