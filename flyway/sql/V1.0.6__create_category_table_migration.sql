@@ -1,0 +1,7 @@
+BEGIN;
+	CREATE TABLE IF NOT EXISTS category(
+		category_id SERIAL PRIMARY KEY,
+		name VARCHAR(100) NOT NULL,
+		description VARCHAR(255)
+	);
+COMMIT;

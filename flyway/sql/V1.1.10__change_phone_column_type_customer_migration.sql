@@ -1,0 +1,3 @@
+ALTER TABLE customer
+ALTER COLUMN phone_number TYPE VARCHAR(50);
+

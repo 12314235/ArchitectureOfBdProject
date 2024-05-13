@@ -1,0 +1,2 @@
+ALTER TABLE session
+ALTER COLUMN ip_address TYPE VARCHAR(256);
