@@ -20,4 +20,4 @@ $$ LANGUAGE plpgsql;
 
 
 
-SELECT insert_fake_category(${CORTAGES_COUNT_MAIN_ENTITIES});
+SELECT insert_fake_user_marketplace(${CORTAGES_COUNT_MAIN_ENTITIES});
