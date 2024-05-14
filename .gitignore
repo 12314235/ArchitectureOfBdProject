@@ -1,0 +1,19 @@
+# Rider-specific
+.idea/
+
+# Compiled files
+/bin/
+/obj/
+
+# User-specific files
+*.suo
+*.user
+*.sln.iml
+*.ide
+
+# Packages folder
+/packages/
+
+# Logs
+/log/
+
