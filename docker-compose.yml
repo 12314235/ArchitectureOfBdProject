@@ -31,3 +31,19 @@ services:
       - "5432:5432"
     volumes:
       - ./data:/var/lib/postgresql/data
+
+  explain-analyze-service:
+    build:
+      context: ./ExplainAnalyzeService/
+      dockerfile: ExplainAnalyzeService/Dockerfile
+    volumes:
+        - ./explain-analyze-files:/app/explain_analyze_files
+    environment:
+      DB_HOST: "db"
+      DB_PORT: "5432"
+      DB_NAME: "database"
+      DB_USER: "postgres"
+      DB_PASSWORD: "postgres"
+      NUM_ATTEMPTS: "4"
+    depends_on:
+      - db

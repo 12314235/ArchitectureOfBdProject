@@ -1,0 +1,15 @@
+﻿services:
+  explainanalyzeservice:
+    image: explainanalyzeservice
+    build:
+      context: .
+      dockerfile: ExplainAnalyzeService/Dockerfile
+    volumes:
+      - ./explain-analyze-files:/app/explain_analyze_files
+    environment:
+       DB_HOST: "localhost"
+       DB_PORT: "5432"
+       DB_NAME: "database"
+       DB_USER: "postgres"
+       DB_PASSWORD: "postgres"
+       NUM_ATTEMPTS: "4"
