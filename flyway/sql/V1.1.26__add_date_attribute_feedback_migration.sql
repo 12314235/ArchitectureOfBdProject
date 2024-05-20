@@ -1,0 +1,1 @@
+ALTER TABLE feedback ADD COLUMN feedback_date DATE; 
