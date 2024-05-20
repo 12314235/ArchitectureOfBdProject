@@ -76,6 +76,11 @@ class Program
                         Console.WriteLine($"{participantName} created.");
                     }
 
+                    using (var cmd = new NpgsqlCommand($"CREATE INDEX ON {participantName}(feedback_date);"))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
                     using (var cmd = new NpgsqlCommand(oldestPartitionQuery, connection))
                     {
                         string oldestPartitionName = (string)cmd.ExecuteScalar();
