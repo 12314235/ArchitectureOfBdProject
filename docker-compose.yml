@@ -47,3 +47,17 @@ services:
       NUM_ATTEMPTS: "4"
     depends_on:
       - db
+
+  feedback-table-service:
+    build:
+      context: ./FeedbackTableScript/
+      dockerfile: FeedbackTableScript/Dockerfile
+    restart: always
+    environment:
+      DB_HOST: "db"
+      DB_PORT: "5432"
+      DB_NAME: "database"
+      DB_USER: "postgres"
+      DB_PASSWORD: "postgres"
+    depends_on:
+      - db
