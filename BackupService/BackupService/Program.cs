@@ -15,6 +15,11 @@ class Program
         string backupDir = Environment.GetEnvironmentVariable("BACKUP_DIR") ?? "/backups";
         int keepBackups = int.Parse(Environment.GetEnvironmentVariable("KEEP_BACKUPS") ?? "3");
 
+        if (!Directory.Exists(backupDir))
+        {
+            Directory.CreateDirectory(backupDir);
+        }
+        
         string currentDate = DateTime.Now.ToString("yyyyMMddHHmmss");
         string backupFile = Path.Combine(backupDir, $"backup_{currentDate}.sql");
 

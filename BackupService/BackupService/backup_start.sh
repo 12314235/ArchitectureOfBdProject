@@ -1,2 +1,2 @@
 #!/bin/bash
-dotnet /app/BackupService.dll
+dotnet /src/BackupService/bin/Release/net8.0/BackupService.dll

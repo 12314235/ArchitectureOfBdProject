@@ -6,7 +6,7 @@ COPY BackupService/backup_start.sh /app/backup_start.sh
 
 RUN chmod +x /app/backup_start.sh
 
-ENV BACKUP_DELAY=5
+ENV BACKUP_DELAY=1
 
 RUN echo 'SHELL=/bin/bash' > /etc/cron.d/backup-cron && \
     echo 'PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin' >> /etc/cron.d/backup-cron && \
@@ -25,4 +25,4 @@ COPY ["BackupService/BackupService.csproj", "BackupService/"]
 RUN dotnet restore "BackupService/BackupService.csproj"
 COPY . .
 WORKDIR "/src/BackupService"
-RUN dotnet build "BackupService.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet publish

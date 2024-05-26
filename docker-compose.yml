@@ -61,3 +61,22 @@ services:
       DB_PASSWORD: "postgres"
     depends_on:
       - db
+
+  backup-service:
+    build:
+      context: ./BackupService/
+      dockerfile: BackupService/Dockerfile
+    volumes:
+      - ./backups:/src/BackupService/backups
+    environment:
+      BACKUP_DELAY: 1
+      DB_HOST: "db"
+      DB_PORT: "5432"
+      DB_NAME: "database"
+      DB_USER: "postgres"
+      DB_PASSWORD: "postgres"
+      KEEP_BACKUPS: "3"
+      BACKUP_DIR: "/src/BackupService/backups"
+    entrypoint: sh -c '/etc/init.d/cron start && tail -f /var/log/cron.log'
+    depends_on:
+      - db
