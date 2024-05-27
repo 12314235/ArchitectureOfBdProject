@@ -17,20 +17,6 @@ services:
       - FLYWAY_PLACEHOLDERS_CORTAGES_COUNT_SMALL_ENTITIES=10000
     depends_on:
       - db
-      
-  db:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: database
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./data:/var/lib/postgresql/data
 
   explain-analyze-service:
     build:
@@ -80,3 +66,31 @@ services:
     entrypoint: sh -c '/etc/init.d/cron start && tail -f /var/log/cron.log'
     depends_on:
       - db
+  
+  etcd:
+    image: quay.io/coreos/etcd:v3.3.8
+    ports:
+      - "2379:2379"
+    command: >
+      /usr/local/bin/etcd
+      -name etcd0
+      -advertise-client-urls http://0.0.0.0:2379
+      -listen-client-urls http://0.0.0.0:2379
+      -initial-advertise-peer-urls http://0.0.0.0:2380
+      -listen-peer-urls http://0.0.0.0:2380
+      -initial-cluster etcd0=http://0.0.0.0:2380
+
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: database
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
