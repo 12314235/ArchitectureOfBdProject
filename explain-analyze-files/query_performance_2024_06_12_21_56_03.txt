@@ -1,0 +1,25 @@
+Query: SELECT u.username, m.name FROM users AS u JOIN user_marketplace AS um ON u.user_id=um.user_id JOIN marketplace AS m ON um.marketplace_id=m.marketplace_id;
+Best Case Cost: -1
+Worst Case Cost: 0
+Average Case Cost: -1
+
+Query: SELECT u.username, p.name FROM users AS u JOIN user_product AS up ON u.user_id=up.user_id JOIN product AS p ON up.product_id=p.product_id;
+Best Case Cost: -1
+Worst Case Cost: 0
+Average Case Cost: -1
+
+Query: SELECT u.username, p.name, m.name FROM users AS u JOIN user_product AS up ON u.user_id=up.user_id JOIN product AS p ON up.product_id=p.product_id JOIN product_marketplace AS pm ON p.product_id=pm.product_id JOIN marketplace AS m ON m.marketplace_id=pm.marketplace_id;
+Best Case Cost: -1
+Worst Case Cost: 0
+Average Case Cost: -1
+
+Query: SELECT p.name, c.name, f.description, f.rating FROM product AS p JOIN feedback AS f ON f.product_id=p.product_id JOIN customer AS c ON c.customer_id=f.customer_id;
+Best Case Cost: -1
+Worst Case Cost: 0
+Average Case Cost: -1
+
+Query: SELECT u.username, sum(f.rating)/count(f.rating) FROM users AS u JOIN user_product AS up ON u.user_id=up.user_id JOIN product AS p ON p.product_id=up.product_id JOIN feedback AS f ON f.product_id=p.product_id GROUP BY u.username;
+Best Case Cost: -1
+Worst Case Cost: 0
+Average Case Cost: -1
+

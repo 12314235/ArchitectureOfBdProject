@@ -6,6 +6,8 @@ services:
     volumes:
       - ./flyway/conf:/flyway/conf
       - ./flyway/sql:/flyway/sql
+    networks:
+      - prometheus-network
     command: ["migrate"]
     environment:
       - FLYWAY_URL=jdbc:postgresql://db:5432/database
@@ -23,7 +25,9 @@ services:
       context: ./ExplainAnalyzeService/
       dockerfile: ExplainAnalyzeService/Dockerfile
     volumes:
-        - ./explain-analyze-files:/app/explain_analyze_files
+      - ./explain-analyze-files:/app/explain_analyze_files
+    networks:
+      - prometheus-network
     environment:
       DB_HOST: "db"
       DB_PORT: "5432"
@@ -38,6 +42,8 @@ services:
     build:
       context: ./FeedbackTableScript/
       dockerfile: FeedbackTableScript/Dockerfile
+    networks:
+      - prometheus-network
     restart: always
     environment:
       DB_HOST: "db"
@@ -52,6 +58,8 @@ services:
     build:
       context: ./BackupService/
       dockerfile: BackupService/Dockerfile
+    networks:
+      - prometheus-network
     volumes:
       - ./backups:/src/BackupService/backups
     environment:
@@ -72,6 +80,8 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: always
+    networks:
+      - prometheus-network
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -80,4 +90,46 @@ services:
       - "5432:5432"
     volumes:
       - ./data:/var/lib/postgresql/data
+
+  postgres_exporter:
+    image: quay.io/prometheuscommunity/postgres-exporter
+    networks:
+      - prometheus-network
+    environment:
+      DATA_SOURCE_NAME: "postgresql://postgres:postgres@db:5432/database?sslmode=disable"
+    volumes:
+      - ./queries.yml:/etc/postgres_exporter/queries.yml
+    ports:
+      - "9187:9187"
+    command:
+      - '--extend.query-path=/etc/postgres_exporter/queries.yml'
+    depends_on:
+      - db
+
+  prometheus:
+    image: prom/prometheus:latest
+    user: root
+    networks:
+      - prometheus-network
+    volumes:
+      - ./prometheus_data:/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - postgres_exporter
+    ports:
+      - "9091:9090"
+
+  grafana:
+    image: grafana/grafana
+    networks:
+      - prometheus-network
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    
+
+networks:
+  prometheus-network:
+    driver: bridge
 
